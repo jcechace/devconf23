@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tooling
+  labels:
+    app: tooling
+spec:
+  containers:
+  - name: tooling
+    imagePullPolicy: IfNotPresent
+    image: quay.io/debezium/tooling:latest
+    command: ["sh", "-c", "tail -f /dev/null"]
+    env:
+      - name: BOOTSTRAP
+        value: dbz-kafka-kafka-bootstrap:9092

@@ -1,0 +1,31 @@
+apiVersion: debezium.io/v1alpha1
+kind: DebeziumServer
+metadata:
+  name: devconf-debezium
+spec:
+  quarkus:
+    config:
+      log.console.json: false
+      log.level: INFO
+  sink:
+    type: kafka
+    config:
+      producer.bootstrap.servers: dbz-kafka-kafka-bootstrap:9092
+      producer.key.serializer: org.apache.kafka.common.serialization.StringSerializer
+      producer.value.serializer: org.apache.kafka.common.serialization.StringSerializer
+  source:
+    class: io.debezium.connector.mongodb.MongoDbConnector
+    config:
+      topic.prefix: devconf23
+      offset.storage.file.filename: /debezium/data/offsets.dat
+      database.history: io.debezium.relational.history.FileDatabaseHistory
+      mongodb.connection.string: mongodb://debezium:dbz@mongo:27017/?replicaSet=rs0
+      collection.include.list: inventory.outbox
+  transforms:
+    - type: io.debezium.connector.mongodb.transforms.outbox.MongoEventRouter
+      config:
+        route.topic.replacement: events.\\${routedByValue}
+        collection.expand.json.payload: true
+        collection.fields.additional.placement: type:header
+      
+
