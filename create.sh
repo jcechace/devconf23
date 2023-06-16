@@ -18,6 +18,7 @@ docker pull quay.io/debezium/operator:devconf
 docker pull quay.io/strimzi/operator:0.35.1
 docker pull quay.io/strimzi/kafka:0.35.1-kafka-3.4.0 
 docker pull quay.io/debezium/server:2.3
+docker pull quay.io/debezium/tooling:latest
 
 
 echo ">>> Loading images"
@@ -26,6 +27,7 @@ kind load docker-image quay.io/debezium/operator:devconf --name $CLUSTER
 kind load docker-image quay.io/debezium/server:2.3 --name $CLUSTER
 kind load docker-image quay.io/strimzi/kafka:0.35.1-kafka-3.4.0 --name $CLUSTER
 kind load docker-image quay.io/strimzi/operator:0.35.1 --name $CLUSTER
+kind load docker-image quay.io/debezium/tooling:latest --name $CLUSTER
 
 # Deploy Operators
 echo ">>> Deploying Operators"
