@@ -13,7 +13,7 @@ kubectl config set-context --current --namespace $NAMESPACE
 
 # Load Images
 echo ">>> Pulling images"
-docker pull quay.io/debezium/example-mongodb:latest
+docker pull --platform linux/amd64 quay.io/debezium/example-mongodb:latest
 docker pull quay.io/debezium/operator:devconf
 docker pull quay.io/strimzi/operator:0.35.1
 docker pull quay.io/strimzi/kafka:0.35.1-kafka-3.4.0 
